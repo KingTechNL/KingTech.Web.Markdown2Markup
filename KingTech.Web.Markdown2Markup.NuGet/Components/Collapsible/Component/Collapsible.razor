@@ -1,0 +1,13 @@
+﻿<details>
+    <summary>@Title</summary>
+    <div class="details-content">
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            @((MarkupString)RawChildContent)
+        }
+    </div>
+</details>

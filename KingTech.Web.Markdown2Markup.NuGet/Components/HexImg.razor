@@ -1,0 +1,37 @@
+﻿<div class="hexagon_image" style="@_style">
+    <img class="image" 
+         src="@Src"
+         alt="@Alt" 
+         data-focus-x="298.0" 
+         data-focus-y="443.0" 
+         data-focus-width="441.0" 
+         data-focus-height="354.0"
+         style="object-fit:cover;aspect-ratio:1/1;">
+</div>
+
+@code {
+    [Parameter]
+    public string Src { get; set; }
+
+    [Parameter]
+    public string Alt { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Width { get; set; }
+    
+    [Parameter] 
+    public string? Height { get; set; }
+
+    private string _style = string.Empty;
+    
+    protected override void OnInitialized()
+    {
+        if (Width != null)
+            _style += $"width:{Width};";
+        if (Height != null)
+            _style += $"height:{Height};";
+
+        base.OnInitialized();
+    }
+
+}

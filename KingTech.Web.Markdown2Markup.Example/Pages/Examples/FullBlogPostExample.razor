@@ -1,0 +1,42 @@
+﻿@page "/fullblog"
+@using KingTech.Web.Markdown2Markup.Example.Data
+@inject NavigationManager _navManager;
+@inject MarkdownService _service
+
+
+@if (_markdown == null)
+{
+    <p><em>Unable to find file <i>@(_sourceFile)</i>.</em></p>
+}else if (_markup == null)
+{
+    <p><em>Unable to render HTML for <i>@(_sourceFile)</i>.</em></p>
+}
+else
+{
+    <div style="padding: 1em; width: 100%">
+        @((MarkupString) _markup)
+    </div>
+}
+
+
+@code {
+    private readonly string _sourceFile = "./MarkdownExamples/fullblog.mdx";
+
+    private string? _markdown;
+    private string? _markup;
+
+    /// <inheritdoc/>
+    protected override async Task OnInitializedAsync()
+    {
+        var content = _service.GetRenderedFile(_sourceFile);
+
+        _markdown = content?.Markdown;
+        _markup = content?.Html;
+    }
+
+    /// <inheritdoc/>
+    protected override async Task OnParametersSetAsync()
+    {
+        await OnInitializedAsync();
+    }
+}

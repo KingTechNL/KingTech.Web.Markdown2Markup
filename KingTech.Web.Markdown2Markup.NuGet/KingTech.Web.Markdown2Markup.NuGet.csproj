@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<PackageId>Markdown2Markup</PackageId>
+		<Description>Blazor markdown to HTML converter based on MarkDig.</Description>
+		<Authors>Gijs van der Meijde</Authors>
+		<Product>Markdown2Markup</Product>
+		<PackageTags>Markdown to HTML converter</PackageTags>
+		<RepositoryUrl>https://github.com/KingTechNL/KingTech.Web.Markdown2Markup</RepositoryUrl>
+		<PackageProjectUrl>https://markdown2markup.kingtech.nl</PackageProjectUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryType>git</RepositoryType>
+
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+
+		<EmbeddedResourceUseDependentUponConvention>false</EmbeddedResourceUseDependentUponConvention>
+		<GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace(".NuGet",""))</RootNamespace>
+		<AssemblyName>$(MSBuildProjectName.Replace(" ", "_").Replace(".NuGet",""))</AssemblyName>
+		<!--<PackageId>$(MSBuildProjectName.Replace(" ", "_").Replace(".NuGet",""))</PackageId>-->
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.5" />
+		<PackageReference Include="Blazored.Typeahead" Version="4.7.0" />
+		<PackageReference Include="BlazorTemplater" Version="1.5.1" />
+		<PackageReference Include="Fuzzy.Blazor.FluentRenderTreeBuilder" Version="3.0.1" />
+		<PackageReference Include="Markdig" Version="0.37.0" />
+		<PackageReference Include="MarkdownSharp" Version="2.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="TabBlazor" Version="5.2.0-alpha" />
+		<EmbeddedResource Include="Content\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Content\css\ECommerceImageGallery.css" />
+		<None Remove="Content\css\ImageShapes.css" />
+		<None Remove="Content\javascript\ECommerceImageSlider.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!--<Folder Include="wwwroot\background.png" />
+		<Folder Include="wwwroot\exampleJsInterop.js" />-->
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+</Project>

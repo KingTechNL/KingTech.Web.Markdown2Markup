@@ -1,0 +1,72 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="https://www.kingtech.nl">
+            <img src="KingTech-logo.png" alt="KingTech" width="150px">
+        </a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Overview
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="()=>expandComponents = !expandComponents">
+                <span class="oi oi-puzzle-piece" aria-hidden="true"></span> Components
+            </NavLink>
+            @if (expandComponents)
+            {
+                <NavLink class="expand-menu" href="components/collapsible">
+                    <span>Collapsible</span>
+                </NavLink>
+                <NavLink class="expand-menu" href="components/heximage">
+                    <span>HexImage</span>
+                </NavLink>
+                <NavLink class="expand-menu" href="components/imagegallery">
+                    <span>ImageGallery</span>
+                </NavLink>
+                <NavLink class="expand-menu" href="components/jsonobject">
+                    <span>JsonObject</span>
+                </NavLink>
+                <NavLink class="expand-menu" href="components/mantislink">
+                    <span>MantisLink</span>
+                </NavLink>
+            }
+        </div>
+        
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="()=>expandExamples = !expandExamples">
+                <span class="oi oi-browser" aria-hidden="true"></span> Examples
+            </NavLink>
+            @if (expandExamples)
+            {
+                <NavLink class="expand-menu" href="fullblog">
+                    <span>Blog</span>
+                </NavLink>
+                <NavLink class="expand-menu" href="fullblog">
+                    <span>ImageGallery</span>
+                </NavLink>
+            }
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool expandComponents = false;
+    private bool expandExamples = false;
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

@@ -1,0 +1,58 @@
+﻿@page "/components/{component?}"
+@using KingTech.Web.Markdown2Markup.Example.Data
+@using Microsoft.AspNetCore.Mvc
+
+@inject MarkdownService _service
+
+@if (!string.IsNullOrWhiteSpace(_markdown))
+{
+    <h1>Source markdown:</h1>
+
+    <div>
+        <pre>
+            <code>
+                @(_markdown)
+            </code>
+        </pre>
+    </div>
+
+    <br/>
+    <br/>
+
+    <h1>Resulting component:</h1>
+
+    <div style="padding: 1em; width: 100%">
+        @((MarkupString) _markup)
+    </div>
+}
+else
+{
+    <h1>Unable to find component named @(Component).</h1>
+}
+
+@code {
+    [Parameter]
+    public string Component { get; set; }
+
+    private const string ExampleDirectory = "./MarkdownExamples/";
+
+    private string? _markdown;
+    private string? _markup;
+
+
+    /// <inheritdoc/>
+    protected override async Task OnInitializedAsync()
+    {
+        _markdown = _service.ReadContentFromFile(Path.Combine(ExampleDirectory, Component)+".mdx");
+        if(!string.IsNullOrWhiteSpace(_markdown))
+            _markup = _service.RenderMarkdown(_markdown);
+    }
+
+    /// <inheritdoc/>
+    protected override async Task OnParametersSetAsync()
+    {
+        await OnInitializedAsync();
+    }
+
+    
+}
