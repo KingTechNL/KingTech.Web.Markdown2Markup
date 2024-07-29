@@ -6,21 +6,22 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG TARGETARCH
 WORKDIR /src
 
 COPY ["KingTech.Web.FormGenerator.NuGet/KingTech.Web.Markdown2Markup.NuGet.csproj", "KingTech.Web.Markdown2Markup.NuGet/"]
-RUN dotnet restore "KingTech.Web.Markdown2Markup.NuGet/KingTech.Web.Markdown2Markup.NuGet.csproj"
+RUN dotnet restore "KingTech.Web.Markdown2Markup.NuGet/KingTech.Web.Markdown2Markup.NuGet.csproj" -a $TARGETARCH 
 COPY  ["KingTech.Web.Markdown2Markup.NuGet/", "KingTech.Web.Markdown2Markup.NuGet/"]
 
 COPY ["KingTech.Web.Markdown2Markup.Example/KingTech.Web.Markdown2Markup.Example.csproj", "KingTech.Web.Markdown2Markup.Example/"]
-RUN dotnet restore "KingTech.Web.Markdown2Markup.Example/KingTech.Web.Markdown2Markup.Example.csproj"
+RUN dotnet restore "KingTech.Web.Markdown2Markup.Example/KingTech.Web.Markdown2Markup.Example.csproj" -a $TARGETARCH 
 COPY  ["KingTech.Web.Markdown2Markup.Example/", "KingTech.Web.Markdown2Markup.Example/"]
 WORKDIR "/src/KingTech.Web.Markdown2Markup.Example"
-RUN dotnet build "KingTech.Web.Markdown2Markup.Example.csproj" -c Release -o /app/build
+RUN dotnet build "KingTech.Web.Markdown2Markup.Example.csproj" -c Release -o /app/build -a $TARGETARCH 
 
 FROM build AS publish
-RUN dotnet publish "KingTech.Web.Markdown2Markup.Example.csproj" -c Release -o /app/publish
+RUN dotnet publish "KingTech.Web.Markdown2Markup.Example.csproj" -c Release -a $TARGETARCH --no-restore -o /app/publish
 
 FROM base AS final
 WORKDIR /app
