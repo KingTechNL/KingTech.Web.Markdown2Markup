@@ -10,7 +10,7 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG TARGETARCH
 WORKDIR /src
 
-COPY ["KingTech.Web.FormGenerator.NuGet/KingTech.Web.Markdown2Markup.NuGet.csproj", "KingTech.Web.Markdown2Markup.NuGet/"]
+COPY ["KingTech.Web.Markdown2Markup.NuGet/KingTech.Web.Markdown2Markup.NuGet.csproj", "KingTech.Web.Markdown2Markup.NuGet/"]
 RUN dotnet restore "KingTech.Web.Markdown2Markup.NuGet/KingTech.Web.Markdown2Markup.NuGet.csproj" -a $TARGETARCH 
 COPY  ["KingTech.Web.Markdown2Markup.NuGet/", "KingTech.Web.Markdown2Markup.NuGet/"]
 
