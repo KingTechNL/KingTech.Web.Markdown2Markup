@@ -32,7 +32,6 @@
 		<PackageReference Include="MarkdownSharp" Version="2.0.5" />
 		<PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="TabBlazor" Version="5.2.0-alpha" />
 		<EmbeddedResource Include="Content\**" />
 	</ItemGroup>
 
@@ -40,11 +39,6 @@
 		<None Remove="Content\css\ECommerceImageGallery.css" />
 		<None Remove="Content\css\ImageShapes.css" />
 		<None Remove="Content\javascript\ECommerceImageSlider.js" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<!--<Folder Include="wwwroot\background.png" />
-		<Folder Include="wwwroot\exampleJsInterop.js" />-->
 	</ItemGroup>
 
 

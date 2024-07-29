@@ -1,0 +1,30 @@
+﻿<div class="parallax__wrapper">
+    <div class="parallax__group hero-container" style="height: @Height.ToString()vh">
+        @if (ParallaxLayers?.Any() ?? false)
+        {
+            var index = 0;
+            foreach (var parallaxLayer in ParallaxLayers)
+            {
+                index++;
+                <div class="parallax__layer" style="background: url('@parallaxLayer.BackgroundImage') no-repeat center; background-size: cover; transform: translateZ(@parallaxLayer.TranslateZPixels) scale(@parallaxLayer.ScaleString); z-index: @index; @parallaxLayer.CustomCss"></div>
+            }
+        }
+        else if (ParallaxClasses?.Any() ?? false)
+        {
+            foreach (var parallaxClass in ParallaxClasses)
+            {
+                <div class="parallax__layer @parallaxClass"></div>
+            }
+        }
+        
+        <div class="parallax__layer hero-text">
+            @HeroContent
+        </div>
+    </div>
+    @if (ChildContent != null)
+    {
+        <div class="parallax__group info-container">
+            @ChildContent
+        </div>
+    }
+</div>
