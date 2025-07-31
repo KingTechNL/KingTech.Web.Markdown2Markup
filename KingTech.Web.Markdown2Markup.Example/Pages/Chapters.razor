@@ -1,0 +1,44 @@
+﻿@page "/chapters"
+@using KingTech.Web.Markdown2Markup.Example.Data
+@using Microsoft.AspNetCore.Mvc
+
+@inject MarkdownService _service
+
+The KingTech Markdown2Markup library allows developers to generate a custom navigation menu based on the chapters defined in the markdown file.<br>
+Below is an example of a navigation menu generated from the <a href="/fullblog">example blog</a>.
+<br>
+<br>
+<hr />
+<br>
+
+@if (!string.IsNullOrWhiteSpace(_markdown))
+{
+    <KingTech.Web.Markdown2Markup.Components.Navigation Chapters="chapters" />  
+}
+else
+{
+    <h1>Loading...</h1>
+}
+
+
+@code {
+
+    private const string ExampleDirectory = "./MarkdownExamples/";
+    private string ExampleFile = "fullblog";   
+
+    private string? _markdown;
+    private List<ChapterTreeNode> chapters = new List<ChapterTreeNode>();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _markdown = _service.ReadContentFromFile(Path.Combine(ExampleDirectory, ExampleFile) + ".mdx");
+        if(!string.IsNullOrWhiteSpace(_markdown))
+            chapters = _service.GetChapters(_markdown);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await OnInitializedAsync();
+    }
+
+}

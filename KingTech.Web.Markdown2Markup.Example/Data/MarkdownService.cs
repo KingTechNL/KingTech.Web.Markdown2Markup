@@ -36,6 +36,13 @@ public class MarkdownService
     public string? RenderMarkdown(string markdown) => MarkdownRenderer.RenderMarkdown(markdown, _jsRuntime);
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="markdown"></param>
+    /// <returns></returns>
+    public List<ChapterTreeNode> GetChapters(string markdown) => MarkdownRenderer.GetChapters(markdown, _jsRuntime);
+
+    /// <summary>
     /// Read the content from the given file.
     /// </summary>
     /// <param name="fileName">The name of the file to parse.</param>

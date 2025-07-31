@@ -28,9 +28,9 @@
 		<PackageReference Include="Blazored.Typeahead" Version="4.7.0" />
 		<PackageReference Include="BlazorTemplater" Version="1.5.1" />
 		<PackageReference Include="Fuzzy.Blazor.FluentRenderTreeBuilder" Version="3.0.1" />
-		<PackageReference Include="Markdig" Version="0.37.0" />
+		<PackageReference Include="Markdig" Version="0.41.3" />
 		<PackageReference Include="MarkdownSharp" Version="2.0.5" />
-		<PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.3.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<EmbeddedResource Include="Content\**" />
 	</ItemGroup>

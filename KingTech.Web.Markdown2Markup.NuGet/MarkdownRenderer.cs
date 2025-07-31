@@ -1,5 +1,6 @@
 ﻿using KingTech.Web.Markdown2Markup.Components.MantisLink;
 using Markdig;
+using Markdig.Syntax;
 using Microsoft.JSInterop;
 
 namespace KingTech.Web.Markdown2Markup;
@@ -50,6 +51,20 @@ public static class MarkdownRenderer
 
     /// <summary>
     /// Render a markdown string into HTML.
+    /// If no builder is set, this method will use the default markdown builder.
+    /// </summary>
+    /// <param name="markdown">The markdown string to render into HTML.</param>
+    /// <param name="jsRuntime">The <see cref="IJSRuntime"/> that will be used for rendering some dynamic components.</param>
+    /// <returns>A HTML string rendered from the given markdown. Null if no HTML could be rendered.</returns>
+    public static string RenderMarkdown(string markdown, IJSRuntime jsRuntime)
+    {
+        if (Builder == null)
+            SetDefaultMarkdownPipelineBuilder(jsRuntime);
+        return RenderMarkdown(markdown);
+    }
+
+    /// <summary>
+    /// Render a markdown string into HTML.
     /// If no builder is set, this method will return null.
     /// </summary>
     /// <param name="markdown">The markdown string to render into HTML.</param>
@@ -66,18 +81,52 @@ public static class MarkdownRenderer
     }
 
     /// <summary>
-    /// Render a markdown string into HTML.
-    /// If no builder is set, this method will use the default markdown builder.
+    /// Get a recursive list of chapters from a markdown string.
+    /// This list can be used by the <see cref="KingTech.Web.Markdown2Markup.Components.Navigation"/> component to render a table of contents.""/>
     /// </summary>
-    /// <param name="markdown">The markdown string to render into HTML.</param>
+    /// <param name="markdown">The markdown to get the chapters from.</param>
     /// <param name="jsRuntime">The <see cref="IJSRuntime"/> that will be used for rendering some dynamic components.</param>
-    /// <returns>A HTML string rendered from the given markdown. Null if no HTML could be rendered.</returns>
-    public static string RenderMarkdown(string markdown, IJSRuntime jsRuntime)
+    /// <returns>A recursive list of chapters.</returns>
+    public static List<ChapterTreeNode> GetChapters(string markdown, IJSRuntime jsRuntime)
     {
         if (Builder == null)
             SetDefaultMarkdownPipelineBuilder(jsRuntime);
-        return RenderMarkdown(markdown);
+
+        return GetChapters(markdown);
     }
 
+    /// <summary>
+    /// Get a recursive list of chapters from a markdown string.
+    /// This list can be used by the <see cref="KingTech.Web.Markdown2Markup.Components.Navigation"/> component to render a table of contents.""/>
+    /// </summary>
+    /// <param name="markdown">The markdown to get the chapters from.</param>
+    /// <returns>A recursive list of chapters.</returns>
+    public static List<ChapterTreeNode> GetChapters(string markdown) 
+    {
+        if (Builder == null)
+            return null;
 
+        var pipeline = Builder.Build();
+
+        var document = Markdig.Markdown.Parse(markdown, pipeline);
+
+        var root = new ChapterTreeNode { Name = "Root", Level = 0 };
+        var stack = new Stack<ChapterTreeNode>();
+        stack.Push(root);
+
+        foreach (var heading in document.Descendants<HeadingBlock>())
+        {
+            var title = string.Concat(heading.Inline);
+            var node = new ChapterTreeNode { Name = title, Level = heading.Level };
+
+            while (stack.Peek().Level >= node.Level)
+                stack.Pop();
+
+            stack.Peek().SubChapters.Add(node);
+            stack.Push(node);
+        }
+
+        return root.SubChapters;
+
+    }
 }

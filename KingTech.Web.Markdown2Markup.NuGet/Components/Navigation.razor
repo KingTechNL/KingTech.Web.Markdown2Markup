@@ -1,0 +1,20 @@
+﻿
+<ul>
+    @foreach (var chapter in Chapters)
+    {
+        <li>
+            <a href="#@chapter.Name">@chapter.Name</a>
+            @if (chapter.SubChapters?.Any() == true)
+            {
+                <Navigation Chapters="chapter.SubChapters" />
+            }
+        </li>
+    }
+</ul>
+
+
+@code {
+    [Parameter]
+    public List<ChapterTreeNode> Chapters { get; set; } = new();
+}
+
