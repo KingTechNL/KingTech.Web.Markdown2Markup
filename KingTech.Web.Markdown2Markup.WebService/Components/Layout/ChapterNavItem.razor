@@ -1,0 +1,70 @@
+﻿@using KingTech.Web.Markdown2Markup.Models
+@using System.Web
+
+@if (HasSubChapters)
+{
+    <li class="nav-item px-3" @onclick="ToggleSubMenu" @onclick:stopPropagation>
+        <a class="nav-link">
+            @Chapter.Name &nbsp;
+            @if (ExpandSubMenu)
+            {
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                    <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
+                </svg>
+            }
+            else
+            {
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                </svg>
+            }
+        </a>
+        @if (ExpandSubMenu)
+        {
+            <ul class="nav-item flex-column pl-@(Chapter.Level + 2)">
+                @foreach (var subChapter in Chapter.SubChapters)
+                {
+                    <ChapterNavItem Chapter="subChapter" />
+                }
+            </ul>
+        }
+    </li>
+}
+else if(!string.IsNullOrWhiteSpace(Chapter.HRef))
+{
+    <li class="nav-item px-@(Chapter.Level + 2)">
+        <NavLink class="nav-link" href="@HRef">@Chapter.Name</NavLink>
+    </li>
+}
+else
+{
+    Console.WriteLine($"No reference found for {Chapter.Name}");
+}
+
+@code {
+    /// <summary>
+    /// The chapter this nav item is created for.
+    /// </summary>
+    [Parameter] 
+    public TableOfContentsNode Chapter { get; set; }
+
+    /// <summary>
+    /// Indicates whether this chapter has sub-chapters.
+    /// </summary>
+    public bool HasSubChapters => Chapter.SubChapters?.Any() == true;
+
+    public string? HRef => $"/{HttpUtility.UrlEncode(Chapter.HRef)}";
+
+    /// <summary>
+    /// Indicates whether the sub-menu should be expanded.
+    /// </summary>
+    public bool ExpandSubMenu = false;
+
+    /// <inheritdoc/>
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine($"{Chapter.Name} has {(HasSubChapters ? "" : "no")} subchapters");
+    }
+
+    private void ToggleSubMenu() => ExpandSubMenu = !ExpandSubMenu;
+}

@@ -1,4 +1,5 @@
-﻿using Microsoft.JSInterop;
+﻿using KingTech.Web.Markdown2Markup.Models;
+using Microsoft.JSInterop;
 
 namespace KingTech.Web.Markdown2Markup.Example.Data;
 
@@ -40,7 +41,7 @@ public class MarkdownService
     /// </summary>
     /// <param name="markdown"></param>
     /// <returns></returns>
-    public List<ChapterTreeNode> GetChapters(string markdown) => MarkdownRenderer.GetChapters(markdown, _jsRuntime);
+    public List<TableOfContentsNode> GetChapters(string markdown) => MarkdownRenderer.GetChapters(markdown, _jsRuntime);
 
     /// <summary>
     /// Read the content from the given file.

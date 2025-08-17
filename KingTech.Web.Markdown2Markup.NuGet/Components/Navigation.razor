@@ -1,4 +1,5 @@
-﻿
+﻿@using KingTech.Web.Markdown2Markup.Models
+
 <ul>
     @foreach (var chapter in Chapters)
     {
@@ -15,6 +16,6 @@
 
 @code {
     [Parameter]
-    public List<ChapterTreeNode> Chapters { get; set; } = new();
+    public List<TableOfContentsNode> Chapters { get; set; } = new();
 }
 

@@ -1,0 +1,52 @@
+﻿@using KingTech.Web.Markdown2Markup.Models
+@using KingTech.Web.Markdown2Markup.WebService.Repositories
+@using KingTech.Web.Markdown2Markup.WebService.Services
+@using KingTech.Web.Markdown2Markup.WebService.Settings
+@using Microsoft.Extensions.Options
+@inject IBlogService blogService
+@inject IOptions<GeneralSettings> generalSettings
+
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">@title</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+        <!-- Main Nav Item -->
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="@homeRef">Home</NavLink>
+        </li>
+
+        <!-- Chapters -->
+        @foreach(var chapter in tableOfContents){
+            <ChapterNavItem Chapter="chapter"></ChapterNavItem>
+        }
+    </nav>
+</div>
+
+
+@code{
+    private List<TableOfContentsNode> tableOfContents;
+    private string homeRef;
+    private string title;
+
+    /// <inheritdoc/>
+    protected override async Task OnInitializedAsync()
+    {
+        title = generalSettings.Value?.Title ?? string.Empty;
+        homeRef = blogService.GetMainPage();
+
+        tableOfContents = blogService.GetTableOfContents();
+        Console.WriteLine("Table of Contents:");
+        foreach (var node in tableOfContents)
+        {
+            Console.WriteLine(node.ToString());
+        }
+    }
+}

@@ -1,5 +1,6 @@
 ﻿@page "/chapters"
 @using KingTech.Web.Markdown2Markup.Example.Data
+@using KingTech.Web.Markdown2Markup.Models
 @using Microsoft.AspNetCore.Mvc
 
 @inject MarkdownService _service
@@ -27,7 +28,7 @@ else
     private string ExampleFile = "fullblog";   
 
     private string? _markdown;
-    private List<ChapterTreeNode> chapters = new List<ChapterTreeNode>();
+    private List<TableOfContentsNode> chapters = new List<TableOfContentsNode>();
     
     protected override async Task OnInitializedAsync()
     {

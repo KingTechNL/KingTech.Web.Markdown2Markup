@@ -1,4 +1,5 @@
 ﻿using KingTech.Web.Markdown2Markup.Components.MantisLink;
+using KingTech.Web.Markdown2Markup.Models;
 using Markdig;
 using Markdig.Syntax;
 using Microsoft.JSInterop;
@@ -87,7 +88,7 @@ public static class MarkdownRenderer
     /// <param name="markdown">The markdown to get the chapters from.</param>
     /// <param name="jsRuntime">The <see cref="IJSRuntime"/> that will be used for rendering some dynamic components.</param>
     /// <returns>A recursive list of chapters.</returns>
-    public static List<ChapterTreeNode> GetChapters(string markdown, IJSRuntime jsRuntime)
+    public static List<TableOfContentsNode> GetChapters(string markdown, IJSRuntime jsRuntime)
     {
         if (Builder == null)
             SetDefaultMarkdownPipelineBuilder(jsRuntime);
@@ -101,7 +102,7 @@ public static class MarkdownRenderer
     /// </summary>
     /// <param name="markdown">The markdown to get the chapters from.</param>
     /// <returns>A recursive list of chapters.</returns>
-    public static List<ChapterTreeNode> GetChapters(string markdown) 
+    public static List<TableOfContentsNode> GetChapters(string markdown) 
     {
         if (Builder == null)
             return null;
@@ -110,14 +111,14 @@ public static class MarkdownRenderer
 
         var document = Markdig.Markdown.Parse(markdown, pipeline);
 
-        var root = new ChapterTreeNode { Name = "Root", Level = 0 };
-        var stack = new Stack<ChapterTreeNode>();
+        var root = new TableOfContentsNode { Name = "Root", Level = 0 };
+        var stack = new Stack<TableOfContentsNode>();
         stack.Push(root);
 
         foreach (var heading in document.Descendants<HeadingBlock>())
         {
             var title = string.Concat(heading.Inline);
-            var node = new ChapterTreeNode { Name = title, Level = heading.Level };
+            var node = new TableOfContentsNode { Name = title, Level = heading.Level };
 
             while (stack.Peek().Level >= node.Level)
                 stack.Pop();
