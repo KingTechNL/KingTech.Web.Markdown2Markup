@@ -3,7 +3,7 @@ name: .NET build pipeline
 # Triggers
 on:
   push:
-    branches: [ main, development ]
+    branches: [ main, development, features/webservice ]
   pull_request:
     branches: [ main, development ]
 
