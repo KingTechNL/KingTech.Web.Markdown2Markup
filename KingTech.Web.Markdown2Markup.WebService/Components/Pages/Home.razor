@@ -6,7 +6,14 @@
 @inject IBlogService blogService
 
 
-@((MarkupString)Content)
+@if (string.IsNullOrWhiteSpace(Content))
+{
+    <p>Unable to load @Reference. Please check the URL or contact support.</p>
+}
+else
+{
+    @((MarkupString)Content)
+}
 
 
 @code{

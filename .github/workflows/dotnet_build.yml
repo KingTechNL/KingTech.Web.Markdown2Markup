@@ -31,5 +31,5 @@ jobs:
         docker_registry_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         docker_registry_password: "${{ secrets.DOCKERHUB_TOKEN }}"
         docker_file: "Dockerfile"
-        docker_image_name: "kingtech.web.markdown2markup.example"
+        docker_image_name: "kingtech.documentary"
         nuget_api_key: "${{ secrets.NUGETORG_TOKEN }}"

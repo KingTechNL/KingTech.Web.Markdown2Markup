@@ -14,16 +14,16 @@ COPY ["KingTech.Web.Markdown2Markup.NuGet/KingTech.Web.Markdown2Markup.NuGet.csp
 RUN dotnet restore "KingTech.Web.Markdown2Markup.NuGet/KingTech.Web.Markdown2Markup.NuGet.csproj" -a $TARGETARCH 
 COPY  ["KingTech.Web.Markdown2Markup.NuGet/", "KingTech.Web.Markdown2Markup.NuGet/"]
 
-COPY ["KingTech.Web.Markdown2Markup.Example/KingTech.Web.Markdown2Markup.Example.csproj", "KingTech.Web.Markdown2Markup.Example/"]
-RUN dotnet restore "KingTech.Web.Markdown2Markup.Example/KingTech.Web.Markdown2Markup.Example.csproj" -a $TARGETARCH 
-COPY  ["KingTech.Web.Markdown2Markup.Example/", "KingTech.Web.Markdown2Markup.Example/"]
-WORKDIR "/src/KingTech.Web.Markdown2Markup.Example"
-RUN dotnet build "KingTech.Web.Markdown2Markup.Example.csproj" -c Release -o /app/build -a $TARGETARCH 
+COPY ["KingTech.Web.Markdown2Markup.WebService/KingTech.Web.Markdown2Markup.WebService.csproj", "KingTech.Web.Markdown2Markup.WebService/"]
+RUN dotnet restore "KingTech.Web.Markdown2Markup.WebService/KingTech.Web.Markdown2Markup.WebService.csproj" -a $TARGETARCH 
+COPY  ["KingTech.Web.Markdown2Markup.WebService/", "KingTech.Web.Markdown2Markup.WebService/"]
+WORKDIR "/src/KingTech.Web.Markdown2Markup.WebService"
+RUN dotnet build "KingTech.Web.Markdown2Markup.WebService.csproj" -c Release -o /app/build -a $TARGETARCH 
 
 FROM build AS publish
-RUN dotnet publish "KingTech.Web.Markdown2Markup.Example.csproj" -c Release -a $TARGETARCH --no-restore -o /app/publish
+RUN dotnet publish "KingTech.Web.Markdown2Markup.WebService.csproj" -c Release -a $TARGETARCH --no-restore -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "KingTech.Web.Markdown2Markup.Example.dll"]
+ENTRYPOINT ["dotnet", "KingTech.Web.Markdown2Markup.WebService.dll"]

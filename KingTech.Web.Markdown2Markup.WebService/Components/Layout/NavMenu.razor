@@ -41,12 +41,6 @@
     {
         title = generalSettings.Value?.Title ?? string.Empty;
         homeRef = blogService.GetMainPage();
-
         tableOfContents = blogService.GetTableOfContents();
-        Console.WriteLine("Table of Contents:");
-        foreach (var node in tableOfContents)
-        {
-            Console.WriteLine(node.ToString());
-        }
     }
 }

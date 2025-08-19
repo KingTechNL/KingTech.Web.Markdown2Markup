@@ -7,8 +7,9 @@ namespace KingTech.Web.Markdown2Markup.WebService.Repositories;
 
 public class FileSystemContentRepository : IContentRepository
 {
+    private static readonly string[] allowedExtensions = { ".md", ".mdx" };
     private static readonly Regex chapterNameRegex = new Regex(@"^(?:(?<index>\d+)_)?(?<name>[^.]+)", RegexOptions.IgnoreCase);
-    private static readonly Regex mainPageRegex = new Regex(@"^index\.cs$", RegexOptions.IgnoreCase);
+    private static readonly Regex mainPageRegex = new Regex(@"^index(" + string.Join("|", allowedExtensions.Select(ext => Regex.Escape(ext))) + ")$", RegexOptions.IgnoreCase);
     private readonly FileSystemSettings settings;
 
     public FileSystemContentRepository(IOptions<FileSystemSettings> settings)
@@ -202,6 +203,17 @@ public class FileSystemContentRepository : IContentRepository
 
     public string GetContent(string reference)
     {
-        return $"#{reference}";
+        // Find the file based on the reference, searching for any allowed extension
+        foreach (var ext in allowedExtensions)
+        {
+            string filePath = Path.Combine(settings.RootDirectory, reference + ext);
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllText(filePath);
+            }
+        }
+
+        // If not found, return empty string or throw exception as needed
+        return string.Empty;
     }
 }
