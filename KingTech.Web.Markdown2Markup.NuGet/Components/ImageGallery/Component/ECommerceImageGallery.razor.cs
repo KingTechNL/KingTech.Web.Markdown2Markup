@@ -26,14 +26,13 @@ public partial class ECommerceImageGallery : ComponentBase
     [Parameter]
     public string Loading { get; set; } = "lazy";
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await Task.Delay(1000); //TODO: This should notice when all is loaded, however: the custom rendering (in the markdown renderer) messes it up.
-        await Initialize();
-    }
-
-    public async Task Initialize()
-    {
-        await JS.InvokeVoidAsync("currentSlide", Identifier, 1);
+        if (firstRender)
+        {
+            await Task.Delay(1000);
+            await JS.InvokeVoidAsync("currentSlide", Identifier, 1);
+        }
+        await base.OnAfterRenderAsync(firstRender);
     }
 }

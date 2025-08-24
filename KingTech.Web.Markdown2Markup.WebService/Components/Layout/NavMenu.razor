@@ -9,7 +9,14 @@
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">@title</a>
+        @if (string.IsNullOrWhiteSpace(logo))
+        {
+            <a class="navbar-brand" href="">@title</a>
+        }
+        else
+        {
+            @((MarkupString)logo)
+        }
     </div>
 </div>
 
@@ -19,27 +26,36 @@
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
         <!-- Main Nav Item -->
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="@homeRef">Home</NavLink>
-        </li>
+        @if (insertHome)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="@homeRef">Home</NavLink>
+            </li>
+        }
 
         <!-- Chapters -->
         @foreach(var chapter in tableOfContents){
-            <ChapterNavItem Chapter="chapter"></ChapterNavItem>
+            <ChapterNavItem Chapter="chapter"/>
         }
     </nav>
 </div>
 
 
+
 @code{
-    private List<TableOfContentsNode> tableOfContents;
-    private string homeRef;
     private string title;
+    private string logo;
+    private List<TableOfContentsNode> tableOfContents;
+
+    private bool insertHome;
+    private string homeRef;
 
     /// <inheritdoc/>
     protected override async Task OnInitializedAsync()
     {
         title = generalSettings.Value?.Title ?? string.Empty;
+        logo = generalSettings.Value?.Logo ?? string.Empty;
+        insertHome = generalSettings.Value?.InsertHomeItem ?? false;
         homeRef = blogService.GetMainPage();
         tableOfContents = blogService.GetTableOfContents();
     }

@@ -13,8 +13,8 @@ var fileSystemSettings = builder.Configuration.GetSection(typeof(FileSystemSetti
 builder.Services.Configure<FileSystemSettings>(fileSystemSettings);
 
 // Add services to the container.
-builder.Services.AddTransient<IContentRepository, FileSystemContentRepository>();
-builder.Services.AddTransient<IBlogService, BlogService>();
+builder.Services.AddScoped<IContentRepository, FileSystemContentRepository>();
+builder.Services.AddScoped<IBlogService, BlogService>();
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -29,7 +29,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();

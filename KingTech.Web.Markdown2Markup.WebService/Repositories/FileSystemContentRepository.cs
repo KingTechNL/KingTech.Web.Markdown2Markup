@@ -31,6 +31,27 @@ public class FileSystemContentRepository : IContentRepository
     /// <exception cref="DirectoryNotFoundException">This is thrown when the set root directory doesnt exist.</exception>
     public List<TableOfContentsNode> GetTableOfContents() => GetTableOfContents(settings.RootDirectory);
 
+    /// <summary>
+    /// Get the content from the given file.
+    /// </summary>
+    /// <param name="reference">The path/name of the file (without extension)</param>
+    /// <returns>The content of the given file reference.</returns>
+    public string GetContent(string reference)
+    {
+        // Find the file based on the reference, searching for any allowed extension
+        foreach (var ext in allowedExtensions)
+        {
+            string filePath = Path.Combine(settings.RootDirectory, reference + ext);
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllText(filePath);
+            }
+        }
+
+        // If not found, return empty string or throw exception as needed
+        return string.Empty;
+    }
+
     private string GetMainPage(string directory)
     {
         // Ensure the directory exists
@@ -199,21 +220,5 @@ public class FileSystemContentRepository : IContentRepository
         // Combine directory and filename (without extension) for reference
         string reference = path == null ? fileName : Path.Combine(path, fileName);
         return reference.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-    }
-
-    public string GetContent(string reference)
-    {
-        // Find the file based on the reference, searching for any allowed extension
-        foreach (var ext in allowedExtensions)
-        {
-            string filePath = Path.Combine(settings.RootDirectory, reference + ext);
-            if (File.Exists(filePath))
-            {
-                return File.ReadAllText(filePath);
-            }
-        }
-
-        // If not found, return empty string or throw exception as needed
-        return string.Empty;
     }
 }

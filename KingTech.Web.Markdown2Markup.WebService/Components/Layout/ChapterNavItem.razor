@@ -3,7 +3,7 @@
 
 @if (HasSubChapters)
 {
-    <li class="nav-item px-3" @onclick="ToggleSubMenu" @onclick:stopPropagation>
+    <li class="nav-item px-@(baseLevel + 1)" @onclick="ToggleSubMenu">
         <a class="nav-link">
             @Chapter.Name &nbsp;
             @if (ExpandSubMenu)
@@ -21,7 +21,7 @@
         </a>
         @if (ExpandSubMenu)
         {
-            <ul class="nav-item flex-column pl-@(Chapter.Level + 2)">
+            <ul class="nav-item flex-column pl-@(Chapter.Level + baseLevel)">
                 @foreach (var subChapter in Chapter.SubChapters)
                 {
                     <ChapterNavItem Chapter="subChapter" />
@@ -32,7 +32,7 @@
 }
 else if(!string.IsNullOrWhiteSpace(Chapter.HRef))
 {
-    <li class="nav-item px-@(Chapter.Level + 2)">
+    <li class="nav-item px-@(Chapter.Level + baseLevel)">
         <NavLink class="nav-link" href="@HRef">@Chapter.Name</NavLink>
     </li>
 }
@@ -42,6 +42,7 @@ else
 }
 
 @code {
+
     /// <summary>
     /// The chapter this nav item is created for.
     /// </summary>
@@ -53,12 +54,18 @@ else
     /// </summary>
     public bool HasSubChapters => Chapter.SubChapters?.Any() == true;
 
-    public string? HRef => $"/{HttpUtility.UrlEncode(Chapter.HRef)}";
+    public string? HRef => $"/page/{HttpUtility.UrlEncode(Chapter.HRef)}";
 
     /// <summary>
     /// Indicates whether the sub-menu should be expanded.
     /// </summary>
     public bool ExpandSubMenu = false;
+
+
+    /// <summary>
+    /// Base level used for nav item offset (pl-)
+    /// </summary>
+    private int baseLevel = 2;
 
     /// <inheritdoc/>
     protected override async Task OnInitializedAsync()
