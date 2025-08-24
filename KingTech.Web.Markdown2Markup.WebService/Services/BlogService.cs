@@ -44,5 +44,12 @@ namespace KingTech.Web.Markdown2Markup.WebService.Services
             logger.LogTrace("Fetching table of contents from repository.");
             return repository.GetTableOfContents();
         }
+
+        public List<TableOfContentsNode>? GetChapters(string reference)
+        {
+            var markdown = repository.GetContent(reference);
+            var chapters = MarkdownRenderer.GetChapters(markdown, jsRuntime);
+            return chapters;
+        }
     }
 }

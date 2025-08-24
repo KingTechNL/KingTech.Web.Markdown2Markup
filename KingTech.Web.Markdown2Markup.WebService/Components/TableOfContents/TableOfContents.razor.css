@@ -1,0 +1,19 @@
+﻿.toc-box {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 250px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+@media (max-width: 640.98px) {
+    .toc-box {
+        position: sticky;
+        width: auto;
+        top: 100px;
+        right: auto;
+    }
+}

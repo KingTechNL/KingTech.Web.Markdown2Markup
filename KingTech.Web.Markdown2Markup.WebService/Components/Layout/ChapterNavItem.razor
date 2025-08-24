@@ -3,7 +3,7 @@
 
 @if (HasSubChapters)
 {
-    <li class="nav-item px-@(baseLevel + 1)" @onclick="ToggleSubMenu">
+    <li class="nav-item px-@(_baseLevel + 1)" @onclick="ToggleSubMenu">
         <a class="nav-link">
             @Chapter.Name &nbsp;
             @if (ExpandSubMenu)
@@ -21,7 +21,7 @@
         </a>
         @if (ExpandSubMenu)
         {
-            <ul class="nav-item flex-column pl-@(Chapter.Level + baseLevel)">
+            <ul class="nav-item flex-column pl-@(Chapter.Level + _baseLevel)">
                 @foreach (var subChapter in Chapter.SubChapters)
                 {
                     <ChapterNavItem Chapter="subChapter" />
@@ -32,7 +32,7 @@
 }
 else if(!string.IsNullOrWhiteSpace(Chapter.HRef))
 {
-    <li class="nav-item px-@(Chapter.Level + baseLevel)">
+    <li class="nav-item px-@(Chapter.Level + _baseLevel)">
         <NavLink class="nav-link" href="@HRef">@Chapter.Name</NavLink>
     </li>
 }
@@ -65,7 +65,7 @@ else
     /// <summary>
     /// Base level used for nav item offset (pl-)
     /// </summary>
-    private int baseLevel = 2;
+    private int _baseLevel = 2;
 
     /// <inheritdoc/>
     protected override async Task OnInitializedAsync()

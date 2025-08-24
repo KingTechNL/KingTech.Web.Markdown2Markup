@@ -1,35 +1,48 @@
 ﻿@page "/"
 @page "/page/{Reference}"
 @using KingTech.Web.Markdown2Markup.Models
+@using KingTech.Web.Markdown2Markup.WebService.Components.TableOfContents
 @using KingTech.Web.Markdown2Markup.WebService.Repositories
 @using KingTech.Web.Markdown2Markup.WebService.Services
+@using KingTech.Web.Markdown2Markup.WebService.Settings
+@using Microsoft.Extensions.Options
 @inject IBlogService blogService
+@inject IOptions<GeneralSettings> settings;
 
-
-@if (string.IsNullOrWhiteSpace(Content))
+@if (string.IsNullOrWhiteSpace(_content))
 {
-    <p>Unable to load @Reference. Please check the URL or contact support.</p>
+    <p>Unable to load @_page. Please check the URL or contact support.</p>
 }
 else
 {
-    @((MarkupString)Content)
+    @if (_showToc)
+    {
+        <TableOfContents Reference="@_page"/>
+    }
+    @((MarkupString)_content)
 }
 
 
 @code{
+
     [Parameter]
     public string? Reference { get; set; }
-    public string? Content { get; set; }
+
+    private string? _page;
+    private string? _content;
+    private bool _showToc;
 
     /// <inheritdoc/>
     protected override async Task OnInitializedAsync()
     {
-        
+
     }
 
     /// <inheritdoc/>
     protected override async Task OnParametersSetAsync()
     {
-        Content = blogService.GetContent(Reference ?? blogService.GetMainPage());
+        _page = Reference ?? blogService.GetMainPage();
+        _showToc = settings.Value?.ShowTableOfContents ?? false;
+        _content = blogService.GetContent(_page);
     }
 }

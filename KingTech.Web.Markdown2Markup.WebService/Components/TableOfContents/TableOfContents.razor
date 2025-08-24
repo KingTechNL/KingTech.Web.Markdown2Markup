@@ -1,0 +1,20 @@
+﻿@using KingTech.Web.Markdown2Markup.Models
+@using KingTech.Web.Markdown2Markup.WebService.Services
+@inject IBlogService blogService
+
+<div class="toc-box">
+    @foreach(var item in _items){
+        <TableOfContentsItem Item="item"/>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string Reference { get; set; } = string.Empty;
+    private List<TableOfContentsNode>? _items;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _items = blogService.GetChapters(Reference);
+    }
+}

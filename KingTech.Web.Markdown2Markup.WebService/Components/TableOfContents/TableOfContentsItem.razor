@@ -1,0 +1,38 @@
+﻿@using System.Web
+@using KingTech.Web.Markdown2Markup.Models
+
+@if (HasSubItems)
+{
+    <li>
+        <a>@Item.Name</a>
+        <ul>
+            @foreach (var subChapter in Item.SubChapters)
+            {
+                <TableOfContentsItem Item="subChapter" />
+            }
+        </ul>
+    </li>
+}
+else
+{
+    <li>@Item.Name</li>
+}
+
+@code {
+    /// <summary>
+    /// The chapter this nav item is created for.
+    /// </summary>
+    [Parameter]
+    public TableOfContentsNode Item { get; set; }
+
+
+    /// <summary>
+    /// Indicates whether this item has sub-items.
+    /// </summary>
+    public bool HasSubItems => Item.SubChapters?.Any() == true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+}

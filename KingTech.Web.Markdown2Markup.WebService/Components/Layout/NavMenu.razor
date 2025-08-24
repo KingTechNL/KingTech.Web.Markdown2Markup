@@ -9,32 +9,38 @@
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        @if (string.IsNullOrWhiteSpace(logo))
+        @if(!string.IsNullOrWhiteSpace(_logoImage))
         {
-            <a class="navbar-brand" href="">@title</a>
+            <!-- Basic logo image -->
+            <a class="navbar-brand" href="@_homeRef"><img src="@_logoImage" class="navbar-brand-image" width="100%"></a>
         }
-        else
+        else if (!string.IsNullOrWhiteSpace(_logo))
         {
-            @((MarkupString)logo)
+            <!-- Custom logo HTML -->
+            @((MarkupString)_logo)
+        }
+        else 
+        {
+            <!-- Show title -->
+            <a class="navbar-brand" href="@_homeRef">@_title</a>
         }
     </div>
 </div>
 
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
-
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
         <!-- Main Nav Item -->
-        @if (insertHome)
+        @if (_insertHome)
         {
             <li class="nav-item px-3">
-                <NavLink class="nav-link" href="@homeRef">Home</NavLink>
+                <NavLink class="nav-link" href="@_homeRef">Home</NavLink>
             </li>
         }
 
         <!-- Chapters -->
-        @foreach(var chapter in tableOfContents){
+        @foreach(var chapter in _tableOfContents){
             <ChapterNavItem Chapter="chapter"/>
         }
     </nav>
@@ -43,20 +49,22 @@
 
 
 @code{
-    private string title;
-    private string logo;
-    private List<TableOfContentsNode> tableOfContents;
+    private string _title;
+    private string _logo;
+    private string _logoImage;
+    private List<TableOfContentsNode> _tableOfContents;
 
-    private bool insertHome;
-    private string homeRef;
+    private bool _insertHome;
+    private string _homeRef;
 
     /// <inheritdoc/>
     protected override async Task OnInitializedAsync()
     {
-        title = generalSettings.Value?.Title ?? string.Empty;
-        logo = generalSettings.Value?.Logo ?? string.Empty;
-        insertHome = generalSettings.Value?.InsertHomeItem ?? false;
-        homeRef = blogService.GetMainPage();
-        tableOfContents = blogService.GetTableOfContents();
+        _title = generalSettings.Value?.Title ?? string.Empty;
+        _logo = generalSettings.Value?.Logo ?? string.Empty;
+        _logoImage = generalSettings.Value?.LogoImage ?? string.Empty;
+        _insertHome = generalSettings.Value?.InsertHomeItem ?? false;
+        _homeRef = string.IsNullOrWhiteSpace(generalSettings.Value?.HomeUrl) ? blogService.GetMainPage() : generalSettings.Value?.HomeUrl ?? string.Empty;
+        _tableOfContents = blogService.GetTableOfContents();
     }
 }

@@ -26,5 +26,13 @@ namespace KingTech.Web.Markdown2Markup.WebService.Services
         /// <param name="reference">The reference string to fetch the content for.</param>
         /// <returns>The (html) content for the given reference.</returns>
         string GetContent(string reference);
+
+        /// <summary>
+        /// Get all the chapters for the given reference.
+        /// This is used to build the small TableOfContents element.
+        /// </summary>
+        /// <param name="reference">The reference string to fetch the content for.</param>
+        /// <returns>A list of <see cref="TableOfContentsNode"/>s representing each chapter for the given reference.</returns>
+        public List<TableOfContentsNode>? GetChapters(string reference);
     }
 }
