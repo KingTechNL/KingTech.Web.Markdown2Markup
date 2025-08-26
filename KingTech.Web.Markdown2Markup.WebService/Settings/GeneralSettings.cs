@@ -42,13 +42,13 @@ namespace KingTech.Web.Markdown2Markup.WebService.Settings
         public string LogoImage { get; set; } = string.Empty;
 
         /// <summary>
+        /// Insert a 'Home' item in the NavBar
+        /// </summary>
+        public bool InsertHomeItem { get; set; } = false;
+        /// <summary>
         /// A URL can be passed to use for the 'home' reference.
         /// This URL will be applied to the title/logo at the top of the navigation bar, and the optional home item that can be enabled using the <see cref="InsertHomeItem"/> option.
         /// </summary>
         public string HomeUrl { get; set; } = string.Empty;
-        /// <summary>
-        /// Insert a 'Home' item in the NavBar
-        /// </summary>
-        public bool InsertHomeItem { get; set; } = false;
     }
 }

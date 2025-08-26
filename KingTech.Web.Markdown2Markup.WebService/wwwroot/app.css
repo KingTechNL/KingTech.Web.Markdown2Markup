@@ -49,3 +49,56 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+
+
+
+/*Striped table*/
+.striped-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+
+    table {
+        border-collapse: collapse;
+        text-indent: initial;
+        border-spacing: 2px;
+    }
+
+    table thead tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+        font-weight: bold;
+        background-color: #e2e2e2;
+    }
+
+    table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    table td, .striped-table thead th {
+        padding: 0.75rem;
+        vertical-align: top;
+        border-top: 1px solid;
+        display: table-cell;
+    }
+
+    table tbody tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+        font-size: 0.9em;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    table td:first-child {
+        font-weight: bold;
+    }
