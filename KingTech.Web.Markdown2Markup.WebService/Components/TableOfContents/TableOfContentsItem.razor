@@ -1,10 +1,11 @@
 ﻿@using System.Web
 @using KingTech.Web.Markdown2Markup.Models
+@inject NavigationManager NavigationManager
 
 @if (HasSubItems)
 {
     <li>
-        <a>@Item.Name</a>
+        <a class="toc-item" href=@GetFullHref(Item.HRef)>@Item.Name</a>
         <ul>
             @foreach (var subChapter in Item.SubChapters)
             {
@@ -15,7 +16,7 @@
 }
 else
 {
-    <li>@Item.Name</li>
+    <li><a class="toc-item" href=@GetFullHref(Item.HRef)>@Item.Name</a></li>
 }
 
 @code {
@@ -31,8 +32,18 @@ else
     /// </summary>
     public bool HasSubItems => Item.SubChapters?.Any() == true;
 
-    protected override async Task OnInitializedAsync()
+
+
+    private string GetFullHref(string? href)
     {
-        
+        if (string.IsNullOrEmpty(href))
+            return "#";
+
+        // Get the current path without the fragment
+        var currentUri = new Uri(NavigationManager.Uri);
+        var currentPath = currentUri.GetLeftPart(UriPartial.Path);
+
+        // If href already starts with #, prepend the current path
+        return $"{currentPath}#{href}";
     }
 }

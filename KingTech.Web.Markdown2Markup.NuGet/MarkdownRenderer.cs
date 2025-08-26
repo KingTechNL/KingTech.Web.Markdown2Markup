@@ -109,7 +109,7 @@ public static class MarkdownRenderer
 
         var pipeline = Builder.Build();
 
-        var document = Markdig.Markdown.Parse(markdown, pipeline);
+        var document = Markdown.Parse(markdown, pipeline);
 
         var root = new TableOfContentsNode { Name = "Root", Level = 0 };
         var stack = new Stack<TableOfContentsNode>();
@@ -118,7 +118,11 @@ public static class MarkdownRenderer
         foreach (var heading in document.Descendants<HeadingBlock>())
         {
             var title = string.Concat(heading.Inline);
-            var node = new TableOfContentsNode { Name = title, Level = heading.Level };
+            var node = new TableOfContentsNode { 
+                Name = title, 
+                HRef = GenerateAnchorId(title),
+                Level = heading.Level 
+            };
 
             while (stack.Peek().Level >= node.Level)
                 stack.Pop();
@@ -129,5 +133,39 @@ public static class MarkdownRenderer
 
         return root.SubChapters;
 
+    }
+
+    /// <summary>
+    /// Generates a URL-friendly anchor ID from heading text.
+    /// </summary>
+    /// <param name="headingText">The heading text to convert.</param>
+    /// <returns>A URL-friendly anchor ID.</returns>
+    private static string GenerateAnchorId(string headingText)
+    {
+        if (string.IsNullOrWhiteSpace(headingText))
+            return string.Empty;
+
+        return headingText
+            .ToLowerInvariant()
+            .Replace(" ", "-")
+            .Replace(".", "")
+            .Replace(",", "")
+            .Replace("!", "")
+            .Replace("?", "")
+            .Replace(":", "")
+            .Replace(";", "")
+            .Replace("(", "")
+            .Replace(")", "")
+            .Replace("[", "")
+            .Replace("]", "")
+            .Replace("{", "")
+            .Replace("}", "")
+            .Replace("/", "")
+            .Replace("\\", "")
+            .Replace("\"", "")
+            .Replace("'", "")
+            .Replace("&", "and")
+            .Replace("--", "-")
+            .Trim('-');
     }
 }

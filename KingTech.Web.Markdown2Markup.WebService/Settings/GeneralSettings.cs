@@ -13,6 +13,11 @@ namespace KingTech.Web.Markdown2Markup.WebService.Settings
         public bool ShowTableOfContents { get; set; } = true;
 
         /// <summary>
+        /// The header text for the table of contents.
+        /// </summary>
+        public string TableOfContentHeader { get; set; } = "Chapters:";
+
+        /// <summary>
         /// The title for your blog.
         /// This is shown at the top of the navigation menu.
         /// </summary>

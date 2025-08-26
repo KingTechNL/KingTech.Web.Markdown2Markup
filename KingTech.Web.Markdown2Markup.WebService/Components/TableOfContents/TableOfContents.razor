@@ -1,20 +1,28 @@
 ﻿@using KingTech.Web.Markdown2Markup.Models
 @using KingTech.Web.Markdown2Markup.WebService.Services
+@using KingTech.Web.Markdown2Markup.WebService.Settings
+@using Microsoft.Extensions.Options
 @inject IBlogService blogService
+@inject IOptions<GeneralSettings> settings;
 
-<div class="toc-box">
-    @foreach(var item in _items){
-        <TableOfContentsItem Item="item"/>
-    }
-</div>
+@if(_hasItems){
+    <div class="toc-box">
+        <h3>@settings.Value?.TableOfContentHeader</h3>
+        @foreach(var item in _items!){
+            <TableOfContentsItem Item="item"/>
+        }
+    </div>
+}
 
 @code {
     [Parameter]
     public string Reference { get; set; } = string.Empty;
     private List<TableOfContentsNode>? _items;
+    private bool _hasItems => _items?.Any() ?? false;
 
-    protected override async Task OnParametersSetAsync()
+    protected override Task OnParametersSetAsync()
     {
         _items = blogService.GetChapters(Reference);
+        return Task.CompletedTask;
     }
 }

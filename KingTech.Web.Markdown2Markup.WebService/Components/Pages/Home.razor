@@ -33,16 +33,12 @@ else
     private bool _showToc;
 
     /// <inheritdoc/>
-    protected override async Task OnInitializedAsync()
-    {
-
-    }
-
-    /// <inheritdoc/>
-    protected override async Task OnParametersSetAsync()
+    protected override Task OnParametersSetAsync()
     {
         _page = Reference ?? blogService.GetMainPage();
         _showToc = settings.Value?.ShowTableOfContents ?? false;
         _content = blogService.GetContent(_page);
+
+        return Task.CompletedTask;
     }
 }

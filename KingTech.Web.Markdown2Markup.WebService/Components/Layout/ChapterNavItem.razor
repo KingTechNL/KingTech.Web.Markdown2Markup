@@ -47,7 +47,7 @@ else
     /// The chapter this nav item is created for.
     /// </summary>
     [Parameter] 
-    public TableOfContentsNode Chapter { get; set; }
+    public TableOfContentsNode Chapter { get; set; } = null!;
 
     /// <summary>
     /// Indicates whether this chapter has sub-chapters.
@@ -66,12 +66,6 @@ else
     /// Base level used for nav item offset (pl-)
     /// </summary>
     private int _baseLevel = 2;
-
-    /// <inheritdoc/>
-    protected override async Task OnInitializedAsync()
-    {
-        
-    }
 
     private void ToggleSubMenu() => ExpandSubMenu = !ExpandSubMenu;
 }

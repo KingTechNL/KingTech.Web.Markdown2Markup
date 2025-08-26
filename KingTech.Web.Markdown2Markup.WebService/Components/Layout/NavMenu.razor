@@ -49,16 +49,16 @@
 
 
 @code{
-    private string _title;
-    private string _logo;
-    private string _logoImage;
-    private List<TableOfContentsNode> _tableOfContents;
+    private string _title = string.Empty;
+    private string _logo = string.Empty;
+    private string _logoImage = string.Empty;
+    private List<TableOfContentsNode> _tableOfContents = new();
 
     private bool _insertHome;
-    private string _homeRef;
+    private string _homeRef = string.Empty;
 
     /// <inheritdoc/>
-    protected override async Task OnInitializedAsync()
+    protected override Task OnInitializedAsync()
     {
         _title = generalSettings.Value?.Title ?? string.Empty;
         _logo = generalSettings.Value?.Logo ?? string.Empty;
@@ -66,5 +66,7 @@
         _insertHome = generalSettings.Value?.InsertHomeItem ?? false;
         _homeRef = string.IsNullOrWhiteSpace(generalSettings.Value?.HomeUrl) ? blogService.GetMainPage() : generalSettings.Value?.HomeUrl ?? string.Empty;
         _tableOfContents = blogService.GetTableOfContents();
+
+        return Task.CompletedTask;
     }
 }

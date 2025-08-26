@@ -9,6 +9,15 @@
     border-radius: 8px;
 }
 
+    .toc-box ::deep .toc-item,
+    .toc-box ::deep .toc-item:link,
+    .toc-box ::deep .toc-item:visited,
+    .toc-box ::deep .toc-item:hover,
+    .toc-box ::deep .toc-item:active {
+        text-decoration: none !important;
+        color: black !important;
+    }
+
 @media (max-width: 640.98px) {
     .toc-box {
         position: sticky;
