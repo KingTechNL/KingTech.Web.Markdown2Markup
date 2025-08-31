@@ -33,3 +33,12 @@ jobs:
         docker_file: "Dockerfile"
         docker_image_name: "kingtech.documentary"
         nuget_api_key: "${{ secrets.NUGETORG_TOKEN }}"
+
+    ### Publish documentation image
+    - name: build documentation image
+      uses: kingtechnl/githubactions/publish-docker@main
+      with:
+        registry_username: "${{ secrets.DOCKERHUB_USERNAME }}" #Username from github secrets
+        registry_password: "${{ secrets.DOCKERHUB_TOKEN }}" #Password from github secrets
+        image_name: "kingtech.documentary.docs"
+        docker_file: "Dockerfile_docs"

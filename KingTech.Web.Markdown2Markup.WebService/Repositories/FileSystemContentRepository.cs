@@ -1,4 +1,5 @@
-﻿using KingTech.Web.Markdown2Markup.Models;
+﻿using Humanizer;
+using KingTech.Web.Markdown2Markup.Models;
 using KingTech.Web.Markdown2Markup.WebService.Settings;
 using Microsoft.Extensions.Options;
 using System.Text.RegularExpressions;
@@ -127,7 +128,7 @@ public class FileSystemContentRepository : IContentRepository
                 //Isolate chapter name and index from directory name.
                 var node = new TableOfContentsNode()
                 {
-                    Name = match.Groups["name"].Value,
+                    Name = match.Groups["name"].Value.Humanize(),
                     HRef = null, //Directories cant have content (yet)
                     Index = int.Parse(match.Groups["index"].Value),
                     Level = level
@@ -179,7 +180,7 @@ public class FileSystemContentRepository : IContentRepository
                 //Isolate chapter name and index from directory name.
                 var node = new TableOfContentsNode()
                 {
-                    Name = match.Groups["name"].Value,
+                    Name = match.Groups["name"].Value.Humanize(),
                     HRef = ToReference(Path.Combine(directory, file)),
                     Index = int.Parse(match.Groups["index"].Value),
                     Level = level
@@ -191,7 +192,7 @@ public class FileSystemContentRepository : IContentRepository
                 //Use full file name and increment index.
                 var node = new TableOfContentsNode()
                 {
-                    Name = Path.GetFileNameWithoutExtension(file),
+                    Name = Path.GetFileNameWithoutExtension(file).Humanize(),
                     HRef = ToReference(Path.Combine(directory, file)),
                     Index = index,
                     Level = level

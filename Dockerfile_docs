@@ -1,0 +1,18 @@
+#Dockerfile for kingtech Markdown2Markup documentation image
+
+FROM kingtech.documentary:8.0-alpine AS base
+RUN apk --no-cache add curl icu-libs libcap bash
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+COPY ["./docs/*", "/docs/"]
+
+ARG TARGETARCH
+ARG GeneralSettings_Title="Markdown2Markup"
+ARG GeneralSettings_InsertHomeItem=true
+ARG GeneralSettings_HomeUrl="https://www.kingtech.nl"
+ARG FileSystemSettings_RootDirectory="/docs"
+
+WORKDIR /app
+ENTRYPOINT ["dotnet", "KingTech.Web.Markdown2Markup.WebService.dll"]

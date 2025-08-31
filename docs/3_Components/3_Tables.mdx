@@ -1,0 +1,71 @@
+# Tables
+
+The underlaying MarkDig library supports 2 types of tables in markdown. Pipe tables and grid tables.
+Tables are a standard markdown feature and will automatically be converted to HTML tables.
+
+## Pipe tables
+
+Pipe tables are the standard table format for [markdown](https://www.markdownguide.org/extended-syntax/#tables). 
+As this component originates from the MarkDig library, the exact workings are explained [here](https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/PipeTableSpecs.md).
+
+The example markdown below shows a basic table consisting of 2 columns and 3 rows.
+
+```
+| column 1 | column 2 |
+| -------- | -------- |
+| 0        | 1        |
+| 3        | 4        |
+| 5        |          |
+```
+
+This will result in the following table:
+
+| column 1 | column 2 |
+| -------- | -------- |
+| 0        | 1        |
+| 3        | 4        |
+| 5        |          |
+
+
+## Grid tables
+
+Grid tables are another way of denoting tables in markdown. It allows for a bit more flexibility in tables, but is a bit harder to read.
+As this component originates from the MarkDig library, the exact workings are explained [here](https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/GridTableSpecs.md).
+
+The markdown example below shows some of the possiblilty with these type of tables.
+
+```
++---------+---------+
+| Header  | Header  |
+| Column1 | Column2 |
++=========+=========+
+| 1. ab   | > This is a quote
+| 2. cde  | > for the second column 
+| 3. f    |
++---------+---------+
+| Second row spanning
+| on two columns
++---------+---------+
+| Back    |         |
+| to      |         |
+| one     |         |
+| column  |         | 
+```
+
+This will result in the following table:
+
++---------+---------+
+| Header  | Header  |
+| Column1 | Column2 |
++=========+=========+
+| 1. ab   | > This is a quote
+| 2. cde  | > for the second column 
+| 3. f    |
++---------+---------+
+| Second row spanning
+| on two columns
++---------+---------+
+| Back    |         |
+| to      |         |
+| one     |         |
+| column  |         | 

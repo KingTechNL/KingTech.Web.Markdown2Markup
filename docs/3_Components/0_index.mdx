@@ -1,0 +1,69 @@
+# Components
+
+As the Markdown2Markup project is build on top of the [MarkDig](https://github.com/xoofx/markdig) library by xoofx, it supports all original components from this library. 
+Additionally, custom components are added which allow users to stylize their website/blog. 
+
+The MarkDig library allows us to parse any markdown and convert it into `HTML`. With this, the following basic markdown features are supported out of the box:
+
+## Headers
+
+Headers can be define using the standard markdown header context as can be seen below:
+
+```
+ # Header 1
+ ## Header 2
+ ### Header 3
+ #### Header 4
+```
+
+This will result in the corrosponding HTML `<h1>`, `<h2>`, `<h*>` elements as can be seen below:
+
+<h1>&nbsp;&nbsp;Header 1</h1>
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;Header 2</h2>
+<h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Header 3</h3>
+<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Header 4</h4>
+
+Headers are automatically given a HTML ID to refer to. For example:  "`# This is a header`" will result in HTML element "`<h1 id="this-is-a-header">This is a heading</h1>`".<br/>
+Only punctuation `-`, `_` and `.` is kept, all other non letter characters are discarded. Consecutive same character `-`, `_` or `.` are rendered into a single one.<br/>
+Characters `-`, `_` and `.` at the end of the string are also discarded.
+
+Note that when used properly in the webservice, headers will automatically be included in the table of contents component.
+
+## Emphasis
+The following basic emphasis are supported:
+
+```
+ *italic*
+ **bold**
+ ~~strike through~~
+ ~Subscript~
+ ^Superscript^
+ ++Inserted++
+ ==Marked==
+```
+
+The *italic* emphasis is achieved by surrounding the text by a single asterisk (`*`)
+
+The **bold** emphasis is achieved by surrounding the text by a 2 asterisks (`**`)
+
+The ~~strike through~~ emphasis is achieved by surrounding the text by 2 tildes (`~~`)
+
+The ~Subscript~ emphasis is achieved by surrounding the text by a single tilde (`~`)
+
+The ^Superscript^ emphasis is achieved by surrounding the text by a single circonflexe (`^`)
+
+The ++Inserted++ emphasis is achieved by surrounding the text by 2 plus symbols (`++`)
+
+The ==Marked== emphasis is achieved by surrounding the text by a 2 equals symbols (`==`)
+
+&nbsp; **Remark:** Unicode symbols are treated as punctuation, which are not allowed to open the emphasis unless they are preceded by a space.<br/> 
+&nbsp; See the examples below for the proper and improper use of emphasis.
+
+```
+ This is text MyBrand ^&reg;^ and MyTrademark ^&trade;^
+ This is text MyBrand^&reg;^ and MyTrademark^&trade;^
+```
+
+&nbsp; This is text MyBrand ^&reg;^ and MyTrademark ^&trade;^ <br/>
+&nbsp; This is text MyBrand^&reg;^ and MyTrademark^&trade;^
+

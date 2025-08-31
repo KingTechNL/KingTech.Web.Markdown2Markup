@@ -1,0 +1,59 @@
+# Media embeds
+
+The Markdown2Markup project comes with the following build-in features to embed media into your page.
+
+## Images
+
+Images can be added to markdown in the standard format: `![alt-text](image-url)`. The example below:
+
+```
+  ![image caption](https://www.kingtech.nl/img/KingTech-logo.png)
+```
+
+Results in the following image:
+
+![image caption](https://www.kingtech.nl/img/KingTech-logo.png)
+
+<br/>
+
+## Youtube
+
+It is possible to embed youtube videos or playlists in markdown using the same syntax as is used for images. <br/>
+MarkDig will automatically recognizes a youtube *"alt-text"* and creates a youtube embed out of the given url.
+
+```
+![youtube.com](https://www.youtube.com/watch?v=mswPy5bt3TQ)
+
+![youtube.com with t](https://www.youtube.com/watch?v=mswPy5bt3TQ&t=100)
+
+![youtu.be](https://youtu.be/mswPy5bt3TQ)
+
+![youtu.be with t](https://youtu.be/mswPy5bt3TQ?t=100)
+
+![youtube.com/embed 1](https://www.youtube.com/embed/mswPy5bt3TQ?start=100&rel=0)
+
+![youtube.com/embed 2](https://www.youtube.com/embed?listType=playlist&list=PLC77007E23FF423C6)
+
+```
+
+![youtube.com](https://www.youtube.com/watch?v=mswPy5bt3TQ)
+
+## Vimeo
+
+Similar to youtube, it is also possible to embed **vimeo** videos. <br/>
+
+```
+![vimeo](https://vimeo.com/8607834)
+```
+
+![vimeo](https://vimeo.com/8607834)
+
+## Static MP4 files
+
+Like embedding youtube or vimeo links, it is also possible to host MP4 files directly and embed these.
+
+```
+![static mp4](https://file-examples.com/wp-content/storage/2017/04/file_example_MP4_1920_18MG.mp4)
+```
+
+![static mp4](https://file-examples.com/wp-content/storage/2017/04/file_example_MP4_1920_18MG.mp4)

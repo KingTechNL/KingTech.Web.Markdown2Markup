@@ -1,4 +1,4 @@
-#Dockerfile for kingtech frontoffice image
+#Dockerfile for kingtech Markdown2Markup webservice image
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS base
 RUN apk --no-cache add curl icu-libs libcap bash

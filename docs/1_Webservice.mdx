@@ -1,0 +1,31 @@
+# Markdown2Markup Webservice
+
+## Getting Started
+
+## Docker
+
+## Settings
+The Markdown2Markup Webservice can be configured to fit your needs. This chapter describes the different settings that are available.
+
+### GeneralSettings
+These settings are used to enable, disable and style the base elements of the webservice. 
+
+| Setting | Type | Default | Description |
+| ------- | ---- | ------- | ----------- |
+| ShowTableOfContents | boolean | *true* | Whether to show a table of contents based on the chapters on a page or not. |
+| TableOfContentHeader | string | "Chapters:" | The header of the table of contents element on a web page. |
+| Title | string | "MyBlog" | The title of your blog, this shows on the top of your navigation menu and browser tab. |
+| Banner | string |  | An optional banner that can be shown in the top of each page. Plain HTML is allowed here. |
+| Logo | string | | An optional logo can be shown at the top of the navigation menu. Plain HTML is allowed here, if no logo is given the `Title` will be used. |
+| LogoImage | string |  | The link to an image can be used to show a logo at the top of the navigation menu. This option will take presedence over the `Logo` option. |
+| InsertHomeItem | string | *false* | Insert a 'Home' item in the navigation menu. |
+| HomeUrl | string | | A URL can be passed to use for the 'home' reference. This URL will be applied to the title/logo at the top of the navigation bar, and the optional home item that can be enabled using the `InsertHomeItem` option. |
+
+<br/>
+
+### FileSystemSettings
+These settings are used when reading markdown files from the filesystem.
+
+| Setting | Type | Default | Description |
+| ------- | ---- | ------- | ----------- |
+| RootDirectory | string | | Path to the root directory the blogs are stored in. |

@@ -1,4 +1,5 @@
-﻿using KingTech.Web.Markdown2Markup.Components.MantisLink;
+﻿using Humanizer;
+using KingTech.Web.Markdown2Markup.Components.MantisLink;
 using KingTech.Web.Markdown2Markup.Models;
 using Markdig;
 using Markdig.Syntax;
@@ -119,7 +120,7 @@ public static class MarkdownRenderer
         {
             var title = string.Concat(heading.Inline);
             var node = new TableOfContentsNode { 
-                Name = title, 
+                Name = title.Humanize(), 
                 HRef = GenerateAnchorId(title),
                 Level = heading.Level 
             };

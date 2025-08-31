@@ -1,0 +1,38 @@
+# Hyperlinks
+
+Hyperlinks are a standard feature in MarkDown and as such are supported in the standard way. 
+In order to add a link to a custom text, wrap the text in `[ ]` followed by the link wrapped in `( )`. For example:
+
+```
+ You can go to google by clicking [here](https://www.google.com).
+```
+
+&nbsp; You can go to google by clicking [here](https://www.google.com).
+
+## Autolinks
+
+In addition to the regular markdown links, MarkDig will automatically convert proper url's to links. It will automatically format a link based on anything that starts with:
+
+- `http://` or `https://`
+- `ftp://`
+- `mailto:`
+- `tel:`
+- `www.`
+
+meaning:
+
+```
+ This is a http://www.google.com URL and https://www.google.com
+ This is a ftp://test.com
+ And a mailto:email@toto.com
+ And a tel:+1555123456
+ And a plain www.google.com
+```
+
+results in:
+
+&nbsp; This is a http://www.google.com URL and https://www.google.com <br/>
+&nbsp; This is a ftp://test.com <br/>
+&nbsp; And a mailto:email@toto.com <br/>
+&nbsp; And a tel:+3161234567 <br/>
+&nbsp; And a plain www.google.com <br/>
