@@ -1,6 +1,6 @@
 #Dockerfile for kingtech Markdown2Markup documentation image
 
-FROM --platform=$BUILDPLATFORM kingtech.documentary:latest AS base
+FROM kingtech.documentary:latest AS base
 RUN apk --no-cache add curl icu-libs libcap bash
 WORKDIR /app
 EXPOSE 80
