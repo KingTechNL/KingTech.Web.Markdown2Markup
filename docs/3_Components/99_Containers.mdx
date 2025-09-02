@@ -1,0 +1,57 @@
+# Custom Container
+
+A custom container is similar to a fenced code block, but it is using the character `:` to declare a block (with at least 3 characters), 
+and instead of generating a `<pre><code>...</code></pre>` it will generate a `<div>...</div>` block.
+
+```
+:::
+This is a custom container
+:::
+```
+
+Will result in:
+
+```
+<div class="spoiler">
+  <p>custom container</p>
+</div>
+```
+
+You can add as many `:` characters (after the first three) as you want, as long as the amount at the closing of your custom container is identical to the amount at the start.
+
+## Classes
+
+It is possible to add classes to the container by adding the class name after the `:::`.
+For example:
+
+```
+:::spoiler
+This is a *spoiler*
+:::
+```
+
+Will result in:
+
+```
+<div class="spoiler">
+  <p>This is a <em>spoiler</em></p>
+</div>
+```
+
+## Custom attributes
+The custom HTML attributes are also supported for Custom Container.
+
+```
+:::spoiler {#myspoiler myprop=yes}
+This is a spoiler
+:::
+```
+
+Will result in:
+
+```
+<div id="myspoiler" class="spoiler" myprop="yes"><p>This is a spoiler</p>
+</div>
+```
+
+**Note:** *when using the Markdown2Markup NuGet library, the Attributes extension is activated after the CustomContainer extension ( `.UseCustomContainer().UseAttributes()` ).*
