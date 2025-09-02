@@ -2,6 +2,7 @@
 using KingTech.Web.Markdown2Markup.Models;
 using KingTech.Web.Markdown2Markup.WebService.Settings;
 using Microsoft.Extensions.Options;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace KingTech.Web.Markdown2Markup.WebService.Repositories;
@@ -12,10 +13,14 @@ public class FileSystemContentRepository : IContentRepository
     private static readonly Regex chapterNameRegex = new Regex(@"^(?:(?<index>\d+)_)?(?<name>[^.]+)", RegexOptions.IgnoreCase);
     private static readonly Regex mainPageRegex = new Regex(@"^index(" + string.Join("|", allowedExtensions.Select(ext => Regex.Escape(ext))) + ")$", RegexOptions.IgnoreCase);
     private readonly FileSystemSettings settings;
+    private readonly ILogger<FileSystemContentRepository> logger;
 
-    public FileSystemContentRepository(IOptions<FileSystemSettings> settings)
+    public FileSystemContentRepository(ILogger<FileSystemContentRepository> logger, IOptions<FileSystemSettings> settings)
     {
         this.settings = settings.Value;
+        this.logger = logger;
+
+        this.logger.LogDebug("Starting file system content repository with settings: {@Settings}", settings);
     }
 
     /// <summary>
@@ -58,6 +63,7 @@ public class FileSystemContentRepository : IContentRepository
         // Ensure the directory exists
         if (!Directory.Exists(directory))
         {
+            logger.LogError("The directory '{directory}' does not exist.", directory);
             throw new DirectoryNotFoundException($"The directory '{directory}' does not exist.");
         }
 
@@ -83,6 +89,7 @@ public class FileSystemContentRepository : IContentRepository
         // Ensure the directory exists
         if (!Directory.Exists(directory))
         {
+            logger.LogError("The directory '{directory}' does not exist.", directory);
             throw new DirectoryNotFoundException($"The directory '{directory}' does not exist.");
         }
 
@@ -109,6 +116,7 @@ public class FileSystemContentRepository : IContentRepository
     {
         if (!Directory.Exists(currentDirectory))
         {
+            logger.LogError("Could not find directory '{directory}'.", currentDirectory);
             throw new DirectoryNotFoundException($"Could not find directory '{currentDirectory}'");
         }
 
