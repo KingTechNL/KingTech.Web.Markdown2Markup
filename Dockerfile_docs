@@ -6,12 +6,12 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-COPY ["./docs/*", "/docs/"]
+COPY ["./docs/", "/docs/"]
 
 ARG TARGETARCH
-ENV GeneralSettings_Title="Markdown2Markup" \
-    GeneralSettings_InsertHomeItem=true \
-    GeneralSettings_HomeUrl="https://www.kingtech.nl" \
-    FileSystemSettings_RootDirectory="/docs"
+ENV GeneralSettings__Title=Markdown2Markup \
+    GeneralSettings__InsertHomeItem=true \
+    GeneralSettings__HomeUrl=https://www.kingtech.nl \
+    FileSystemSettings__RootDirectory=/docs
 
 ENTRYPOINT ["dotnet", "KingTech.Web.Markdown2Markup.WebService.dll"]
